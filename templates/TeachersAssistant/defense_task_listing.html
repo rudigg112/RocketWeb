@@ -1,0 +1,174 @@
+{% extends "RocketWebMain/index.html" %}
+{% load static %}
+
+{% block chapter %}Защита проектов | Список заявок | {% endblock %}
+
+{% block content %}
+    <div class="d-sm-flex d-block justify-content-between align-items-center mb-4">
+        <div class="card-action coin-tabs mt-3 mt-sm-0">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#AllStatus" aria-selected="true" role="tab"
+                       tabindex="-1">Все заявки</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#Drafts" aria-selected="false" role="tab"
+                       tabindex="-1">Черновики</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#Send" aria-selected="false" role="tab"
+                       tabindex="-1">Отправленные</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="d-flex mt-sm-0 mt-3">
+            <!-- Кнопка для открытия модального окна -->
+            <button class="btn btn-secondary" title="Click here to Search" type="button" data-bs-toggle="modal"
+                    data-bs-target="#searchModal">
+                Новая задача
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if tasks %}
+            {% for task in tasks %}
+                <div class="col-xl-3 col-xxl-4 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h4 class="mb-0">Заявка. Защита проекта. #{{ task.id }}</h4>
+                                <br>
+                                <h4>Статус:
+                                    {% if task.is_complete %}
+                                        <span class="text-success mb-3 d-block">{{ task.status }}</span>
+                                    {% else %}
+                                        <span class="text-primary mb-3 d-block">{{ task.status }}</span>
+                                    {% endif %}
+                                </h4>
+                            </div>
+                            <div class="text-center">
+                                <h4>Ссылка на ученика
+                                    <a href="{{ task.client_link }}">{{ task.client_link }}</a>
+                                </h4>
+                            </div>
+                            <div class="text-center">
+                                <h3 class="mb-0">
+                                    <a href="/teacher-assistant/project-defense/{{ task.id }}">Перейти к заявке</a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center">
+                <p>Нет доступных задач.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">Новая задача</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Поле для ввода ссылки -->
+                    <div class="mb-3">
+                        <label for="modalLinkInput" class="form-label">Ссылка на ученика</label>
+                        <input type="text" class="form-control" id="modalLinkInput" placeholder="Введите ссылку">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Кнопка "Закрыть" -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <!-- Кнопка "Поиск" -->
+                    <button type="button" class="btn btn-primary" id="modalSearchButton">Поиск</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log('DOM загружен');
+
+            // Получаем элементы модального окна
+            const modalSearchButton = document.getElementById('modalSearchButton'); // Кнопка "Поиск"
+            const modalLinkInput = document.getElementById('modalLinkInput'); // Поле для ввода ссылки
+            const errorMessage = document.createElement('div'); // Элемент для вывода ошибок
+
+            // Настройка стилей для сообщения об ошибке
+            errorMessage.style.color = 'red';
+            errorMessage.style.marginTop = '5px';
+            modalLinkInput.parentElement.appendChild(errorMessage);
+
+            // Обработчик для кнопки "Поиск"
+            modalSearchButton.addEventListener('click', async function () {
+                try {
+                    errorMessage.textContent = ''; // Очищаем предыдущие ошибки
+
+                    // Получаем значение ссылки и проверяем его формат
+                    const link = modalLinkInput.value.trim();
+                    if (!link.startsWith('https://rtschool.s20.online/company/1/customer/view?id=')) {
+                        errorMessage.textContent = 'Некорректная ссылка';
+                        return;
+                    }
+
+                    // Извлекаем ID клиента из ссылки
+                    const clientId = link.split('id=')[1];
+                    if (!clientId) {
+                        errorMessage.textContent = 'Некорректная ссылка. Не удалось извлечь ID клиента.';
+                        return;
+                    }
+
+                    // Проверяем существование записи через AJAX
+                    const checkClientResponse = await fetch(`/check-client/?client_id=${clientId}&type=defense`);
+                    const checkClientData = await checkClientResponse.json();
+
+                    if (checkClientData.error) {
+                        errorMessage.textContent = checkClientData.error;
+                        return;
+                    }
+
+                    // Если запись существует и завершена (is_complete == 1)
+                    if (checkClientData.task_id && checkClientData.is_complete) {
+                        window.location.href = `/teacher-assistant/project-defense/${checkClientData.task_id}`;
+                        return;
+                    }
+
+                    // Если записи нет или она не завершена (is_complete == 0), создаем новую запись
+                    const createDraftResponse = await fetch('/create-draft/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            client_id: clientId,
+                            user_id: '{{ request.user.discord_id }}'
+                        })
+                    });
+
+                    const createDraftData = await createDraftResponse.json();
+
+                    if (createDraftData.success) {
+                        window.location.href = `/teacher-assistant/project-defense/${createDraftData.task_id}`;
+                    } else {
+                        errorMessage.textContent = createDraftData.error || 'Произошла ошибка при создании записи.';
+                    }
+                } catch (error) {
+                    console.error('Ошибка при отправке запроса:', error);
+                    errorMessage.textContent = 'Произошла ошибка при проверке клиента.';
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,370 @@
+{% extends "RocketWebMain/index.html" %}
+{% load static %}
+
+{% block chapter %}Защита проектов | {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="filter cm-content-box box-primary">
+                <div class="content-title">
+                    <div class="cpa">
+                        <i class="fa-sharp fa-solid fa-filter me-2"></i>Ссылка на ученика
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader"><i
+                                class="fal fa-angle-down"></i></a>
+                    </div>
+                </div>
+                <div class="cm-content-body form excerpt">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <input type="text" disabled="disabled" class="form-control mb-xl-0 mb-3"
+                                       id="exampleFormControlInput1" placeholder="Link"
+                                       value="{{ task_info.client_link }}">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter cm-content-box box-primary">
+                <div class="content-title">
+                    <div class="cpa">
+                        <i class="fa-solid fa-file-lines me-1"></i>Информация об ученике и преподавателе (заполняется
+                        автоматически)
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader"><i
+                                class="fal fa-angle-down"></i></a>
+                    </div>
+                </div>
+                <div class="cm-content-body form excerpt">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">👨‍🏫 Преподаватель</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ user.username }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">👩‍🏫 ТимЛид</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ task_info.tl_name }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">Alfa CRM IDS</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled"
+                                       value="{{ task_info.alfa_id }} / {{ task_info.alfa_teacher_id }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">👤 Имя ученика</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ task_info.student_name }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">🎂 Возраст Ученика</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ task_info.student_age }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">Gender</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ task_info.student_gender }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">📊 Маркет</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ task_info.market }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">🌍 Страна</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ task_info.country }}">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="exampleFormControlInput1" class="form-label">💼 Портфолио</label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       disabled="disabled" value="{{ task_info.portfolio }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter cm-content-box box-primary">
+                <div class="content-title">
+                    <div class="cpa">
+                        <i class="fa-solid fa-file-lines me-1"></i>Заполните форму
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader"><i
+                                class="fal fa-angle-down"></i></a>
+                    </div>
+                </div>
+                <div class="cm-content-body form excerpt">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4 m-b30">
+                                <label for="language_lesson" class="form-label">Язык урока
+                                    <span class="text-muted" id="loader_language_lesson"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_language_lesson"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+
+                                <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                        id="language_lesson" name="language_lesson" data-field="language_lesson">
+                                    <option value="{{ task_info.language_lesson }}" selected>
+                                        {% if task_info.language_lesson %}
+                                            {{ task_info.language_lesson|escape }}
+                                        {% endif %}</option>
+                                    <option value="Русский">Русский</option>
+                                    <option value="English">Английский</option>
+                                    <option value="Español">Испанский</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="type_lesson" class="form-label">📌 Формат урока
+                                    <span class="text-muted" id="loader_type_lesson"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_type_lesson"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                        id="type_lesson" name="type_lesson" data-field="type_lesson">
+                                    <option value="{{ task_info.type_lesson }}" selected>
+                                        {% if task_info.type_lesson %}
+                                            {{ task_info.type_lesson|escape }}
+                                        {% endif %}
+                                    </option>
+                                    <option value="Individual">Индивидуальный формат</option>
+                                    <option value="Parallel">Параллельный формат</option>
+                                    <option value="Group">Групповой формат</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="well" class="form-label">📚 Курс
+                                    <span class="text-muted" id="loader_well"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_well"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                        id="well" name="well" data-field="well">
+                                    <option value="{{ task_info.well }}" selected>
+                                        {% if task_info.well %}
+                                            {{ task_info.well|escape }}
+                                        {% endif %}
+                                    </option>
+                                    <option value="Junior">Junior</option>
+                                    <option value="Python">Python</option>
+                                    <option value="Roblox">Roblox</option>
+                                    <option value="Minecraft">Minecraft</option>
+                                    <option value="Scratch">Scratch</option>
+                                    <option value="Digital Creativity">Digital Creativity</option>
+                                    <option value="Graphic Design">Graphic Design</option>
+                                    <option value="Unity">Unity</option>
+                                    <option value="Web">Web</option>
+                                    <option value="Blender">Blender</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="theme_number" class="form-label">🔢 Номер темы
+                                    <span class="text-muted" id="loader_theme_number"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_theme_number"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                        id="theme_number" name="theme_number" data-field="theme_number">
+                                    <option value="{{ task_info.theme_number }}" selected>
+                                        {% if task_info.theme_number %}
+                                            {{ task_info.theme_number|escape }}
+                                        {% endif %}
+                                    </option>
+                                    <option value="8">8</option>
+                                    <option value="16">24</option>
+                                    <option value="32">32</option>
+                                    <option value="40">40</option>
+                                    <option value="48">48</option>
+                                    <option value="56">56</option>
+                                    <option value="64">64</option>
+                                    <option value="72">72</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-8 m-b30">
+                                <label for="video_link" class="form-label">🔗 Ссылка на видео
+                                    <span class="text-muted" id="loader_video_link"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_video_link"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="video_link"
+                                       value="{% if task_info.video_link %} {{ task_info.video_link|escape }} {% endif %}"
+                                       data-field="video_link">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="project_name" class="form-label">📝 Название проекта
+                                    <span class="text-muted" id="loader_project_name"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_project_name"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="project_name"
+                                       value="{% if task_info.project_name %} {{ task_info.project_name|escape }} {% endif %}"
+                                       data-field="project_name">
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="project_type" class="form-label">📝 Тип проекта
+                                    <span class="text-muted" id="loader_project_type"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_project_type"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                        id="project_type" name="project_type" data-field="project_type">
+                                    <option value="{{ task_info.project_type|escape }}" selected>
+                                        {% if task_info.project_type %}
+                                            {{ task_info.project_type|escape }}
+                                        {% endif %}
+                                    </option>
+                                    <option value="Program">Program</option>
+                                    <option value="Application">Application</option>
+                                    <option value="Website Design">Website Design</option>
+                                    <option value="Website">Website</option>
+                                    <option value="Illustration">Illustration</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4 m-b30"></div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="project_description" class="form-label">🧾 Описание проекта
+                                    <span class="text-muted" id="loader_project_description"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_project_description"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <input class="form-control" id="project_description" data-field="project_description" 
+                                        value='{{ task_info.project_description|escape }}'>
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="skills" class="form-label">🏅 Чему научились
+                                    <span class="text-muted" id="loader_skills"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_skills"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <input class="form-control" id="skills" placeholder="" required="" data-field="skills" 
+                                        value='{{ task_info.skills|escape }}'>
+                            </div>
+
+                            <div class="col-sm-4 m-b30">
+                                <label for="lessons_count" class="form-label">⏳ Сколько уроков выполняли
+                                    <span class="text-muted" id="loader_lessons_count"
+                                          style="display: none;">Обновление черновика...</span>
+                                    <span class="text-success" id="message_lessons_count"
+                                          style="display: none;">Черновик сохранен!</span>
+                                </label>
+                                <input class="form-control" id="lessons_count"
+                                          placeholder="" required="" data-field="lessons_count" 
+                                        value='{{ task_info.lessons_count|escape }}'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fields = document.querySelectorAll('[data-field]');
+
+            fields.forEach(field => {
+                // Для input используем событие blur, для select используем событие change
+                if (field.tagName === 'INPUT' || field.tagName === 'TEXTAREA') {
+                    field.addEventListener('blur', handleFieldUpdate);
+                } else if (field.tagName === 'SELECT') {
+                    field.addEventListener('change', handleFieldUpdate);
+                }
+            });
+
+            async function handleFieldUpdate(event) {
+                const fieldName = this.dataset.field; // Получаем имя поля
+                const fieldValue = this.value; // Получаем значение поля
+
+                // Находим загрузчик и сообщение
+                const loader = document.getElementById(`loader_${fieldName}`);
+                const message = document.getElementById(`message_${fieldName}`);
+
+                if (!loader || !message) {
+                    console.error(`Loader or message element not found for field: ${fieldName}`);
+                    return;
+                }
+
+                // Показываем загрузчик
+                loader.style.display = 'inline-block';
+                message.style.display = 'none';
+
+                try {
+                    const response = await fetch('/update_task_defense_field/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            field: fieldName,
+                            value: fieldValue,
+                            task_id: {{ task_info.task_id }}
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        // Показываем сообщение об успехе
+                        loader.style.display = 'none';
+                        message.style.display = 'inline-block';
+                        setTimeout(() => {
+                            message.style.display = 'none';
+                        }, 3000); // Скрываем сообщение через 3 секунды
+                    } else {
+                        alert(`Ошибка: ${result.error}`);
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка при сохранении данных');
+                } finally {
+                    loader.style.display = 'none'; // Скрываем загрузчик в любом случае
+                }
+            }
+        });
+    </script>
+
+{% endblock %}

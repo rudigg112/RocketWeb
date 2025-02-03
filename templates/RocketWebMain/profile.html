@@ -1,0 +1,385 @@
+{% extends "RocketWebMain/index.html" %}
+{% load static %}
+
+{% block chapter %}Профиль | {% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="clearfix">
+                <div class="card card-bx author-profile m-b30">
+                    <div class="card-body">
+                        <div class="p-5">
+                            <div class="author-profile">
+                                <div class="author-media">
+                                    <img src="/static/RTSMain/images/ava_2_bench.png" alt="user"
+                                         class="img-responsive profile-photo">
+                                </div>
+                                <div class="author-info">
+                                    <h3 class="">{{ request.user.username }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-9 col-lg-8">
+            <div class="card card-bx m-b30">
+                <div class="filter cm-content-box box-primary">
+                    <div class="content-title">
+                        <div class="cpa">
+                            <h2>Профиль</h2>
+                        </div>
+                    </div>
+
+                    <div class="cm-content-body form excerpt" style="">
+                        <div class="profile-form">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6 m-b30">
+                                        <label for="departament" class="form-label">Отдел
+                                            <span class="text-muted" id="loader_departament" style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_departament" style="display: none;">Успешно!</span>
+                                        </label>
+                                        <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                                id="departament"
+                                                name="departament"
+                                                data-field="departament">
+                                            <option value="{{ user_info.departament }}"
+                                                    selected>{{ user_info.departament }}</option>
+                                            <option value="hr">HR</option>
+                                            <option value="admins">Admins</option>
+                                            <option value="admins">Analitics</option>
+                                            <option value="admins">RSS Platform</option>
+                                            <option value="tech_support">Tech Support</option>
+                                            <option value="teachers">Teachers</option>
+                                            <option value="marketing">Marketing</option>
+                                            <option value="sales">Sales</option>
+                                            <option value="product">Product</option>
+                                            <option value="product">RTG (Game server)</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-sm-6 m-b30">
+                                        <label class="form-label" for="full_name">
+                                            👤 ФИО
+                                            <span class="text-muted" id="loader_full_name" style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_full_name" style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="user_fio"
+                                               maxlength="50"
+                                               required=""
+                                               id="full_name"
+                                               data-field="full_name"
+                                               value="{{ user_info.full_name }}">
+
+                                    </div>
+
+                                    <div class="col-sm-6 m-b30">
+                                        <label for="date_birth" class="form-label">Дата рождения
+                                            <span class="text-muted" id="loader_date_birth" style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_date_birth" style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="date" name="datetime_start_register" id="date_birth"
+                                               class="form-control"
+                                               value="{{ user_info.date_birth }}"
+                                               data-field="date_birth">
+                                    </div>
+
+                                    <div class="col-sm-6 m-b30">
+                                        <label class="form-label" for="country_location">Страна нахождения
+                                            <span class="text-muted" id="loader_country_location"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_country_location"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="country_location"
+                                               maxlength="50"
+                                               required=""
+                                               id="country_location"
+                                               value="{{ user_info.country_location }}"
+                                               data-field="country_location">
+
+                                        <label class="form-label" for="city">Город нахождения
+                                            <span class="text-muted" id="loader_city"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_city"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="city"
+                                               maxlength="50"
+                                               required=""
+                                               id="city"
+                                               value="{{ user_info.city }}"
+                                               data-field="city">
+
+                                        <label class="form-label" for="country_of_tax">Страна налоговой резиденции
+                                            <span class="text-muted" id="loader_country_of_tax"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_country_of_tax"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="country_of_tax"
+                                               maxlength="50"
+                                               required=""
+                                               id="country_of_tax"
+                                               data-field="country_of_tax"
+                                               value="{{ user_info.country_of_tax }}">
+                                    </div>
+
+                                    <div class="col-sm-6 m-b30">
+                                        <label class="form-label" for="phone_number">Номер телефона
+                                            <span class="text-muted" id="loader_phone_number"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_phone_number"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="phone_number"
+                                               maxlength="50"
+                                               required=""
+                                               id="phone_number"
+                                               data-field="phone_number"
+                                               value="{{ user_info.phone_number }}">
+                                        <label class="form-label" for="phone_number_reserve">Номер телефона ближайшего
+                                            родственника
+                                            <span class="text-muted" id="loader_phone_number_reserve"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_phone_number_reserve"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="phone_number_reserve"
+                                               maxlength="50"
+                                               required=""
+                                               data-field="phone_number_reserve"
+                                               id="phone_number_reserve"
+                                               value="{{ user_info.phone_number_reserve }}">
+                                    </div>
+
+                                    <div class="col-sm-6 m-b30">
+                                        <label class="form-label" for="email">Google Email
+                                            <span class="text-muted" id="loader_email"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_email"
+                                                  style="display: none;">Успешно!</span>
+
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="email"
+                                               maxlength="50"
+                                               required=""
+                                               id="email"
+                                               data-field="email"
+                                               value="{{ user_info.email }}">
+
+                                        <label class="form-label" for="email_for_notion">Email for Notion
+                                            <span class="text-muted" id="loader_email_for_notion"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_email_for_notion"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="email_for_notion"
+                                               maxlength="50"
+                                               required=""
+                                               id="email_for_notion"
+                                               data-field="email_for_notion"
+                                               value="{{ user_info.email_for_notion }}">
+
+                                        <label class="form-label" for="email_for_alfa">Email for Alfa CRM
+                                            <span class="text-muted" id="loader_email_for_alfa"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_email_for_alfa"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="email_for_alfa"
+                                               maxlength="50"
+                                               required=""
+                                               id="email_for_alfa"
+                                               data-field="email_for_alfa"
+                                               value="{{ user_info.email_for_alfa }}">
+
+                                        <label class="form-label" for="email_omni">Email for OmniDesk
+                                            <span class="text-muted" id="loader_email_for_omnidesk"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_email_for_omnidesk"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="email_for_omnidesk"
+                                               maxlength="50"
+                                               required=""
+                                               id="email_for_omnidesk"
+                                               data-field="email_for_omnidesk"
+                                               value="{{ user_info.email_for_omnidesk }}">
+                                    </div>
+
+                                    <div class="col-sm-6 m-b30">
+                                        <label class="form-label" for="telegram_nickname">Telegram
+                                            <span class="text-muted" id="loader_telegram_nickname"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_telegram_nickname"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="telegram_nickname"
+                                               maxlength="50"
+                                               required=""
+                                               id="telegram_nickname"
+                                               data-field="telegram_nickname"
+                                               value="{{ user_info.telegram_nickname }}">
+                                    </div>
+
+                                    <div class="col-sm-6 m-b30">
+                                        <label for="legal_status" class="form-label">Юрид. статус
+                                            <span class="text-muted" id="loader_legal_status"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_legal_status"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                                id="legal_status"
+                                                name="legal_status"
+                                                data-field="legal_status">
+                                            <option value="{{ user_info.legal_status }}"
+                                                    selected>{{ user_info.legal_status }}</option>
+                                            <option value="natural_person">Natural Person</option>
+                                            <option value="individual_entrepreneur">Individual Entrepreneur</option>
+                                            <option value="llc_ltd">LLC/LTD</option>
+                                            <option value="self_employed">Self-employed (СМЗ)</option>
+                                            <option value="other">Другое</option>
+                                        </select>
+
+                                        <label for="payment_receive" class="form-label">Способ вывода
+                                            <span class="text-muted" id="loader_payment_receive"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_payment_receive"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                                id="payment_receive"
+                                                data-field="payment_receive"
+                                                name="payment_receive">
+                                            <option value="{{ user_info.payment_receive }}"
+                                                    selected>{{ user_info.payment_receive }}</option>
+                                            <option value="fiat">Fiat (SolarStaff/4dev)</option>
+                                            <option value="tinkoff">Tinkoff</option>
+                                            <option value="crypto">Crypto (4dev)</option>
+                                            <option value="other">Другое</option>
+                                        </select>
+
+                                        <label class="form-label" for="payment_requisites">Реквизиты
+                                            <span class="text-muted" id="loader_payment_requisites"
+                                                  style="display: none;">Обновление данных...</span>
+                                            <span class="text-success" id="message_payment_requisites"
+                                                  style="display: none;">Успешно!</span>
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               name="payment_requisites"
+                                               maxlength="50"
+                                               required=""
+                                               id="payment_requisites"
+                                               data-field="payment_requisites"
+                                               value="{{ user_info.payment_requisites }}">
+                                    </div>
+
+                                    <div class="col-sm-6 m-b30"></div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fields = document.querySelectorAll('[data-field]');
+            fields.forEach(field => {
+                // Для input используем событие blur, для select используем событие change
+                if (field.tagName === 'INPUT') {
+                    field.addEventListener('blur', handleFieldUpdate);
+                } else if (field.tagName === 'SELECT') {
+                    field.addEventListener('change', handleFieldUpdate);
+                }
+            });
+
+            async function handleFieldUpdate(event) {
+                const fieldName = this.dataset.field; // Получаем имя поля
+                const fieldValue = this.value; // Получаем значение поля
+
+                // Находим загрузчик и сообщение
+                const loader = document.getElementById(`loader_${fieldName}`);
+                const message = document.getElementById(`message_${fieldName}`);
+
+                if (!loader || !message) {
+                    console.error(`Loader or message element not found for field: ${fieldName}`);
+                    return;
+                }
+
+                // Показываем загрузчик
+                loader.style.display = 'inline-block';
+                message.style.display = 'none';
+
+                try {
+                    const response = await fetch('/save_profile_field/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            field: fieldName,
+                            value: fieldValue
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        // Показываем сообщение об успехе
+                        loader.style.display = 'none';
+                        message.style.display = 'inline-block';
+                        setTimeout(() => {
+                            message.style.display = 'none';
+                        }, 3000); // Скрываем сообщение через 3 секунды
+                    } else {
+                        alert(`Ошибка: ${result.error}`);
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка при сохранении данных');
+                } finally {
+                    loader.style.display = 'none'; // Скрываем загрузчик в любом случае
+                }
+            }
+        });
+    </script>
+{% endblock %}

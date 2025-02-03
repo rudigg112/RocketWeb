@@ -1,0 +1,594 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="robots" content="index, follow" />
+    <meta name="author" content="Bench LTD">
+	<meta name="keywords" content="bench, бенч, benchtournaments, бэнч, tournaments, бенч турниры">
+    <meta name="description" content="Официальная турнирная площадка экосистемы Bench.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone=no">
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<title>{% block title %}Bench Tournaments{% endblock %}</title>
+
+
+	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+
+
+	<link href="{% static 'Jobick/xhtml/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">
+	<link href="{% static 'Jobick/xhtml/vendor/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+
+	<!-- Globle CSS -->
+    <link href="{% static 'Jobick/xhtml/css/style.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div id="preloader">
+		<div class="lds-ripple">
+			<div></div>
+			<div></div>
+		</div>
+    </div>
+
+    <div id="main-wrapper">
+
+        <div class="nav-header">
+            <a href="/" class="brand-logo">
+				<img src="/static/btMain/images/bench_3.png" width="30px" height="40px" class="img-responsive profile-photo">
+
+
+
+            </a>
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+							<div class="dashboard_bar">
+                                Bench Tournaments
+                            </div>
+
+                        </div>
+                        <ul class="navbar-nav header-right">
+
+							<li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link bell dz-theme-mode p-0" href="javascript:void(0);">
+									<i id="icon-light" class="fas fa-sun"></i>
+                                    <i id="icon-dark" class="fas fa-moon"></i>
+
+                                </a>
+							</li>
+
+
+							<li class="nav-item dropdown header-profile">
+                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                                    <img src="/static/btMain/images/ava_2_bench.png" alt="user" class="img-responsive profile-photo">
+
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a href="/profile" class="dropdown-item ai-icon">
+                                        <svg id="icon-user2" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        <span class="ms-2">Профиль </span>
+                                    </a>
+
+                                    <a href="page-register.html" class="dropdown-item ai-icon">
+                                        <svg  xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                        <span class="ms-2">Выйти </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+				</nav>
+			</div>
+		</div>
+
+
+         <div class="dlabnav">
+            <div class="dlabnav-scroll">
+				<div class="dropdown header-profile2 ">
+					<a class="nav-link " href="/profile"  role="button" data-bs-toggle="dropdown">
+						<div class="header-info2 d-flex align-items-center">
+							<img src="/static/btMain/images/ava_2_bench.png" alt="user" class="img-responsive profile-photo">
+							<div class="d-flex align-items-center sidebar-info">
+								<div>
+									<span class="font-w400 d-block">{{ user.username }}</span>
+									{% if user.is_superuser %}
+									<small class="text-end font-w400">Superadmin</small>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</a>
+
+				</div>
+
+
+				<ul class="metismenu" id="menu">
+					{% if user.is_authenticated %}
+                    <li><a class="has-arrow " href="/" >
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">Главная</span>
+						</a>
+                    </li>
+					<li><a class="has-arrow " href="/profile" >
+							<i class="flaticon-093-waving"></i>
+							<span class="nav-text">Профиль</span>
+						</a>
+                    </li>
+
+					<li><a class="has-arrow " href="/user{{user.id}}/teams">
+						<i class="fa-solid fa-gear"></i>
+							<span class="nav-text">Мои команды</span>
+						</a>
+					</li>
+
+
+                    <li><a class="has-arrow " href="/joined-tournaments" >
+						<i class="flaticon-050-info"></i>
+							<span class="nav-text">Мои турниры</span>
+						</a>
+
+                    </li>
+					{% if user.is_superuser %}
+                    <li><a class="has-arrow " href="/admin-panel" aria-expanded="false">
+							<i class="flaticon-041-graph"></i>
+							<span class="nav-text">Админ-панель</span>
+						</a>
+
+                    </li>
+					{% endif %}
+					<li><a class="has-arrow " href="{% url 'logout' %}" aria-expanded="false">
+							<svg  xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+
+							<span class="nav-text">Выйти</span>
+						</a>
+
+                    </li>
+
+					{% else %}
+                    <li><a class="has-arrow " href="{% url 'logout' %}" aria-expanded="false">
+							<i class="flaticon-043-menu"></i>
+							<span class="nav-text">Войти</span>
+						</a>
+
+                    </li>
+					{% endif %}
+
+<!--                    <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">-->
+<!--							<i class="flaticon-086-star"></i>-->
+<!--							<span class="nav-text">Bootstrap</span>-->
+<!--						</a>-->
+<!--                        <ul aria-expanded="false">-->
+<!--                            <li><a href="ui-accordion.html">Accordion</a></li>-->
+<!--                            <li><a href="ui-alert.html">Alert</a></li>-->
+<!--                            <li><a href="ui-badge.html">Badge</a></li>-->
+<!--                            <li><a href="ui-button.html">Button</a></li>-->
+<!--                            <li><a href="ui-modal.html">Modal</a></li>-->
+<!--                            <li><a href="ui-button-group.html">Button Group</a></li>-->
+<!--                            <li><a href="ui-list-group.html">List Group</a></li>-->
+<!--                            <li><a href="ui-card.html">Cards</a></li>-->
+<!--                            <li><a href="ui-carousel.html">Carousel</a></li>-->
+<!--                            <li><a href="ui-dropdown.html">Dropdown</a></li>-->
+<!--                            <li><a href="ui-popover.html">Popover</a></li>-->
+<!--                            <li><a href="ui-progressbar.html">Progressbar</a></li>-->
+<!--                            <li><a href="ui-tab.html">Tab</a></li>-->
+<!--                            <li><a href="ui-typography.html">Typography</a></li>-->
+<!--                            <li><a href="ui-pagination.html">Pagination</a></li>-->
+<!--                            <li><a href="ui-grid.html">Grid</a></li>-->
+
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">-->
+<!--							<i class="flaticon-045-heart"></i>-->
+<!--							<span class="nav-text">Plugins</span>-->
+<!--						</a>-->
+<!--                        <ul aria-expanded="false">-->
+<!--                            <li><a href="uc-select2.html">Select 2</a></li>-->
+<!--                            <li><a href="uc-nestable.html">Nestedable</a></li>-->
+<!--                            <li><a href="uc-noui-slider.html">Noui Slider</a></li>-->
+<!--                            <li><a href="uc-sweetalert.html">Sweet Alert</a></li>-->
+<!--                            <li><a href="uc-toastr.html">Toastr</a></li>-->
+<!--                            <li><a href="map-jqvmap.html">Jqv Map</a></li>-->
+<!--							<li><a href="uc-lightgallery.html">Light Gallery</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><a href="widget-basic.html" class="" aria-expanded="false">-->
+<!--							<i class="flaticon-013-checkmark"></i>-->
+<!--							<span class="nav-text">Widget</span>-->
+<!--						</a>-->
+<!--					</li>-->
+<!--                    <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">-->
+<!--							<i class="flaticon-072-printer"></i>-->
+<!--							<span class="nav-text">Forms</span>-->
+<!--						</a>-->
+<!--                        <ul aria-expanded="false">-->
+<!--                            <li><a href="form-element.html">Form Elements</a></li>-->
+<!--                            <li><a href="form-wizard.html">Wizard</a></li>-->
+<!--                            <li><a href="form-ckeditor.html">CkEditor</a></li>-->
+<!--                            <li><a href="form-pickers.html">Pickers</a></li>-->
+<!--                            <li><a href="form-validation.html">Form Validate</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">-->
+<!--							<i class="flaticon-043-menu"></i>-->
+<!--							<span class="nav-text">Table</span>-->
+<!--						</a>-->
+<!--                        <ul aria-expanded="false">-->
+<!--                            <li><a href="table-bootstrap-basic.html">Bootstrap</a></li>-->
+<!--                            <li><a href="table-datatable-basic.html">Datatable</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">-->
+<!--							<i class="flaticon-022-copy"></i>-->
+<!--							<span class="nav-text">Pages</span>-->
+<!--						</a>-->
+<!--                        <ul aria-expanded="false">-->
+<!--                            <li><a href="page-login.html">Login</a></li>-->
+<!--                            <li><a href="page-register.html">Register <span class="badge badge-xs badge-danger ms-3">New</span></a></li>-->
+<!--                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>-->
+<!--                                <ul aria-expanded="false">-->
+<!--                                    <li><a href="page-error-400.html">Error 400</a></li>-->
+<!--                                    <li><a href="page-error-403.html">Error 403</a></li>-->
+<!--                                    <li><a href="page-error-404.html">Error 404</a></li>-->
+<!--                                    <li><a href="page-error-500.html">Error 500</a></li>-->
+<!--                                    <li><a href="page-error-503.html">Error 503</a></li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                            <li><a href="page-lock-screen.html">Lock Screen</a></li>-->
+<!--                            <li><a href="empty-page.html">Empty Page</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+                </ul>
+				<div class="plus-box">
+					<p class="fs-14 font-w600 mb-2">Pre-Alpha 0.6<br></p>
+					<p class="plus-box-p">Developed by Максимка</p>
+				</div>
+				<div class="copyright">
+					<p><strong>Bench LTD</strong> © 2023-2024 All Rights Reserved</p>
+					<p class="fs-12">From Bench With<span class="heart"></span> </p>
+				</div>
+			</div>
+        </div>
+
+
+
+
+        <div class="content-body">
+
+			<div class="container-fluid">
+					{% block content %}
+					{% endblock %}
+
+			</div>
+		</div>
+	</div>
+
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2023</p>
+            </div>
+        </div>
+
+
+	</div>
+
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Job Title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal">
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Company Name<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Name" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Position<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Name" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Job Category<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>Choose...</option>
+										  <option>QA Analyst</option>
+										   <option>IT Manager</option>
+										    <option>Systems Analyst</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Job Type<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>Choose...</option>
+										  <option>Part-Time</option>
+										   <option>Full-Time</option>
+										    <option>Freelancer</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">No. of Vancancy<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Name" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Select Experience<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>1 yr</option>
+										  <option>2 Yr</option>
+										   <option>3 Yr</option>
+										    <option>4 Yr</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Posted Date<span class="text-danger scale5 ms-2">*</span></label>
+										<div class="input-group">
+											 <div class="input-group-text"><i class="far fa-clock"></i></div>
+											<input type="date" name="datepicker" class="form-control">
+										</div>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Last Date To Apply<span class="text-danger scale5 ms-2">*</span></label>
+										<div class="input-group">
+											 <div class="input-group-text"><i class="far fa-clock"></i></div>
+											<input type="date" name="datepicker" class="form-control">
+										</div>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Close Date<span class="text-danger scale5 ms-2">*</span></label>
+										<div class="input-group">
+											 <div class="input-group-text"><i class="far fa-clock"></i></div>
+											<input type="date" name="datepicker" class="form-control">
+										</div>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Select Gender:<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>Choose...</option>
+										  <option>Male</option>
+										   <option>Female</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Salary Form<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="$" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Salary To<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="$" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter City:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="$" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter State:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="State" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter Counter:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="State" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter Education Level:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Education Level" aria-label="name">
+									</div>
+									<div class="col-xl-12 mb-4">
+										  <label  class="form-label font-w600">Description:<span class="text-danger scale5 ms-2">*</span></label>
+										  <textarea class="form-control solid" rows="5" aria-label="With textarea"></textarea>
+									</div>
+								</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	 <!-- Modal -->
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Modal title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal">
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Company Name<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Name" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Position<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Name" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Job Category<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>Choose...</option>
+										  <option>QA Analyst</option>
+										   <option>IT Manager</option>
+										    <option>Systems Analyst</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Job Type<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>Choose...</option>
+										  <option>Part-Time</option>
+										   <option>Full-Time</option>
+										    <option>Freelancer</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">No. of Vancancy<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Name" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Select Experience<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>1 yr</option>
+										  <option>2 Yr</option>
+										   <option>3 Yr</option>
+										    <option>4 Yr</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Posted Date<span class="text-danger scale5 ms-2">*</span></label>
+										<div class="input-group">
+											 <div class="input-group-text"><i class="far fa-clock"></i></div>
+											<input size="16" type="date" value="2012-06-15" readonly class="form-control form_datetime solid">
+										</div>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Last Date To Apply<span class="text-danger scale5 ms-2">*</span></label>
+										<div class="input-group">
+											 <div class="input-group-text"><i class="far fa-clock"></i></div>
+											<input size="16" type="date" value="2012-06-15" readonly class="form-control form_datetime solid">
+										</div>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Close Date<span class="text-danger scale5 ms-2">*</span></label>
+										<div class="input-group">
+											 <div class="input-group-text"><i class="far fa-clock"></i></div>
+											<input size="16" type="date" value="2012-06-15" readonly class="form-control form_datetime solid">
+										</div>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+										<label  class="form-label font-w600">Select Gender:<span class="text-danger scale5 ms-2">*</span></label>
+										<select  class="nice-select default-select wide form-control solid">
+										  <option selected>Choose...</option>
+										  <option>Male</option>
+										   <option>Female</option>
+										</select>
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Salary Form<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="$" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Salary To<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="$" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter City:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="$" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter State:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="State" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter Counter:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="State" aria-label="name">
+									</div>
+									<div class="col-xl-6  col-md-6 mb-4">
+									  <label  class="form-label font-w600">Enter Education Level:<span class="text-danger scale5 ms-2">*</span></label>
+										<input type="text" class="form-control solid" placeholder="Education Level" aria-label="name">
+									</div>
+									<div class="col-xl-12 mb-4">
+										  <label  class="form-label font-w600">Description:<span class="text-danger scale5 ms-2">*</span></label>
+										  <textarea class="form-control solid" aria-label="With textarea"></textarea>
+									</div>
+								</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+ required vendors
+<script src="{% static 'jobick/xhtml/vendor/global/global.min.js' %}  "></script>
+<script src="{% static 'jobick/xhtml/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}  "></script>
+
+<!-- apex chart -->
+<script src="{% static 'jobick/xhtml/ vendor/apexchart/apexchart.js' %} "></script>
+<script src="{% static 'jobick/xhtml/vendor/chartjs/chart.bundle.min.js' %}  "></script>
+
+<!-- chart piety plugin files -->
+<script src="{% static 'jobick/xhtml/vendor/peity/jquery.peity.min.js' %}  "></script>
+
+<!-- dashboard 1 -->
+<script src="{% static 'jobick/xhtml/js/dashboard/dashboard-1.js' %}  "></script>
+
+<script src="{% static 'jobick/xhtml/vendor/owl-carousel/owl.carousel.js' %}"></script>
+
+<script src="{% static 'jobick/xhtml/js/custom.min.js' %} "></script>
+<script src="{% static 'jobick/xhtml/js/dlabnav-init.js' %}  "></script>
+
+
+<script>
+function JobickCarousel()
+	{
+
+		/*  testimonial one function by = owl.carousel.js */
+		jQuery('.front-view-slider').owlCarousel({
+			loop:false,
+			margin:30,
+			nav:true,
+			autoplaySpeed: 3000,
+			navSpeed: 3000,
+			autoWidth:true,
+			paginationSpeed: 3000,
+			slideSpeed: 3000,
+			smartSpeed: 3000,
+			autoplay: false,
+			animateOut: 'fadeOut',
+			dots:true,
+			navText: ['', ''],
+			responsive:{
+				0:{
+					items:1,
+					
+					margin:10
+				},
+				
+				480:{
+					items:1
+				},			
+				
+				767:{
+					items:3
+				},
+				1750:{
+					items:3
+				}
+			}
+		})
+	}
+
+	jQuery(window).on('load',function(){
+		setTimeout(function(){
+			JobickCarousel();
+		}, 1000); 
+	});
+</script>
+</body>
+</html>

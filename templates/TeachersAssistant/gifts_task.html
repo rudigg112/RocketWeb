@@ -1,0 +1,104 @@
+{% extends "RocketWebMain/index.html" %}
+{% load static %}
+
+ {% block chapter %}Подарки | {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="filter cm-content-box box-primary">
+                <div class="content-title">
+                    <div class="cpa">
+                        <i class="fa-sharp fa-solid fa-filter me-2"></i>Ссылка на ученика
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader"><i
+                                class="fal fa-angle-down"></i></a>
+                    </div>
+                </div>
+                <div class="cm-content-body form excerpt">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-9 ">
+                                <input type="text" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                       placeholder="Link">
+                            </div>
+
+
+                            <div class="col-xl-3">
+                                <button class="btn btn-secondary" title="Click here to Search" type="button"><i
+                                        class="fa fa-search me-1"></i>Поиск
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter cm-content-box box-primary">
+                <div class="content-title">
+                    <div class="cpa">
+                        <i class="fa-solid fa-file-lines me-1"></i>Заполните форму для отправки
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:void(0);" class="expand SlideToolHeader"><i
+                                class="fal fa-angle-down"></i></a>
+                    </div>
+                </div>
+                <div class="cm-content-body form excerpt">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 m-b30">
+                                <label for="user_country" class="form-label">Подарок(-ки)</label>
+                                <select class="selectpicker nice-select default-select form-control wide mh-auto"
+                                        id="user_country"
+                                        name="user_country" multiple>
+                                    <option value="Магнит - 500RC">Магнит - 500RC</option>
+                                    <option value="Носки, 39 размер - 1200RC">Носки, 39 размер - 1200RC</option>
+                                    <option value="Roblox NEW">Стикеры - 500RC</option>
+                                    <option value="Стикеры - 500RC">Галактическая сфера - 2000RC</option>
+                                    <option value="Проектор «Звездное небо» - 2500RC">Проектор «Звездное небо» -
+                                        2500RC
+                                    </option>
+                                    <option value="Ночник Увлажнитель воздуха - 2000RC">Ночник Увлажнитель воздуха -
+                                        2000RC
+                                    </option>
+                                    <option value="Gift-cart Steam, 10$ - 1000RC">Gift-cart Steam, 10$ - 1000RC</option>
+                                    <option value="Discord NITRO, 1 месяц - 1200RC">Discord NITRO, 1 месяц - 1200RC
+                                    </option>
+                                    <option value="Gift-card Roblox, 10$ - 1000RC">Gift-card Roblox, 10$ - 1000RC
+                                    </option>
+                                    <option value="Компьютерная проводная мышь - 1000RC">Компьютерная проводная мышь -
+                                        1000RC
+                                    </option>
+                                    <option value="Проводная клавиатура с мышью - 2500RC">Проводная клавиатура с мышью -
+                                        2500RC
+                                    </option>
+                                    <option value="Компьютерная гарнитура с микрофоном - 3000RC">Компьютерная гарнитура
+                                        с микрофоном - 3000RC
+                                    </option>
+                                    <option value="Плюшевый Енот - 2500RC">Плюшевый Енот - 2500RC</option>
+                                    <option value="Индивидуальный урок с педагогом, 50 мин - 1500RC">Индивидуальный урок
+                                        с педагогом, 50 мин - 1500RC
+                                    </option>
+                                    <option value="Групповой урок с педагогом - 1000R">Групповой урок с педагогом -
+                                        1000RC
+                                    </option>
+                                    <option value="10$ - 1000RC">10$ - 1000RC</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-12 m-b30">
+                                <label for="validationCustom04" class="form-label">Комментарий</label>
+                                <textarea class="form-control" id="validationCustom04" rows="8"
+                                          placeholder="What would you like to see?" required=""></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

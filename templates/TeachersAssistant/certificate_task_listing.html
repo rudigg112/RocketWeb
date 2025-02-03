@@ -1,0 +1,157 @@
+{% extends "RocketWebMain/index.html" %}
+{% load static %}
+
+{% block chapter %}Сертификаты | Список заявок | {% endblock %}
+
+{% block content %}
+    <div class="d-sm-flex d-block justify-content-between align-items-center mb-4">
+        <div class="card-action coin-tabs mt-3 mt-sm-0">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#AllStatus" aria-selected="true" role="tab"
+                       tabindex="-1">Все заявки</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#Drafts" aria-selected="false" role="tab"
+                       tabindex="-1">Черновики</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#Send" aria-selected="false" role="tab"
+                       tabindex="-1">Отправленные</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="d-flex mt-sm-0 mt-3">
+            <!-- Кнопка для открытия модального окна -->
+            <button class="btn btn-secondary" title="Click here to Search" type="button" data-bs-toggle="modal"
+                    data-bs-target="#searchModal">
+                Новая задача
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-xxl-4  col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4 class="mb-0">Заявка. Сертификат. #0</h4>
+                        <br>
+                        <h4>Статус: <span class="text-primary mb-3 d-block">Не отправлено</span></h4>
+                    </div>
+
+                    <div class="text-center">
+                        <h4>Ссылка на ученика <a href="https://rtschool.s20.online/company/1/customer/view?id=74091">
+                            https://rtschool.s20.online/company/1/customer/view?id=74091</a>
+                        </h4>
+                    </div>
+
+                    <div class="text-center">
+                        <h3 class="mb-0"><a href="javascript:void(0);">Перейти к заявке</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-xxl-4  col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4 class="mb-0">Заявка. Сертификат. #00</h4>
+                        <br>
+                        <h4>Статус: <span class="text-success mb-3 d-block">Отправлено</span></h4>
+                    </div>
+
+                    <div class="text-center">
+                        <h4>Ссылка на ученика <a href="https://rtschool.s20.online/company/1/customer/view?id=74091">
+                            https://rtschool.s20.online/company/1/customer/view?id=74091</a>
+                        </h4>
+                    </div>
+
+                    <div class="text-center">
+                        <h3 class="mb-0"><a href="/teacher-assistant/certificate/1">Перейти к заявке</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">Новая задача</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Поле для ввода ссылки -->
+                    <div class="mb-3">
+                        <label for="modalLinkInput" class="form-label">Ссылка на ученика</label>
+                        <input type="text" class="form-control" id="modalLinkInput" placeholder="Введите ссылку">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Кнопка "Закрыть" -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <!-- Кнопка "Поиск" -->
+                    <button type="button" class="btn btn-primary" id="modalSearchButton">Поиск</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log('DOM загружен');
+
+            // Получаем элементы модального окна
+            const modalSearchButton = document.getElementById('modalSearchButton'); // Кнопка "Поиск" в модальном окне
+            const modalLinkInput = document.getElementById('modalLinkInput'); // Поле для ввода ссылки в модальном окне
+            const errorMessage = document.createElement('div'); // Элемент для вывода ошибок
+            errorMessage.style.color = 'red';
+            errorMessage.style.marginTop = '5px';
+            modalLinkInput.parentElement.appendChild(errorMessage); // Добавляем элемент для ошибок
+
+            // Обработчик для кнопки "Поиск" в модальном окне
+            modalSearchButton.addEventListener('click', function () {
+                const link = modalLinkInput.value.trim(); // Получаем значение ссылки
+                errorMessage.textContent = ''; // Очищаем предыдущие ошибки
+
+                // Проверяем формат ссылки
+                if (!link.startsWith('https://rtschool.s20.online/company/1/customer/view?id=')) {
+                    errorMessage.textContent = 'Некорректная ссылка';
+                    return;
+                }
+
+                // Извлекаем ID клиента из ссылки
+                const clientId = link.split('id=')[1];
+                if (!clientId) {
+                    errorMessage.textContent = 'Некорректная ссылка. Не удалось извлечь ID клиента.';
+                    return;
+                }
+
+                // Отправляем AJAX-запрос на сервер
+                fetch(`/check-client/?client_id=${clientId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            errorMessage.textContent = data.error;
+                        } else {
+                            errorMessage.textContent = ''; // Очищаем ошибки, если они были
+
+                            // Перенаправляем на другую страницу
+                            window.location.href = `/teacher-assistant/certificate/${clientId}`; // Замените на нужный URL
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при отправке запроса:', error);
+                        errorMessage.textContent = 'Произошла ошибка при проверке клиента.';
+                    });
+            });
+        });
+    </script>
+{% endblock %}

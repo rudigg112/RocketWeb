@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index, follow"/>
+    <meta name="author" content="RTS">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- PAGE TITLE HERE -->
+    <title>Авторизация | RTS</title>
+
+    <!-- Favicon icon -->
+    <link href="{% static 'RTSRes/xhtml/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">
+    <link href="{% static 'RTSRes/xhtml/vendor/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+
+    <!-- Globle CSS -->
+    <link href="{% static 'RTSMain/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="vh-100" style="background-color: #17171E">
+
+<div class="fix-wrapper" style="min-height: 100vh; display: flex; padding: 30px 0; align-items: center;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6">
+                <div class="card mb-0 h-auto "
+                     style="margin-bottom: 1.875rem; background-color: #212130; transition: all .5s ease-in-out;  position: relative; border: 0rem solid transparent; border-radius: 0.5rem; box-shadow: 0rem 0.3125rem 0.3125rem 0rem rgba(82, 63, 105, 0.05); height: calc(100% - 30px);">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="/static/btMain/images/bench_3.png" width="30px" height="40px"
+                                 class="img-responsive profile-photo">
+                        </div>
+                        <h2 class="text-center mb-4" style="color: white">Чтобы продолжить, авторизуйтесь через Discord</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="text-center">
+                                <button name="ds_auth" class="btn btn-primary btn-block" type="submit">Авторизоваться</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

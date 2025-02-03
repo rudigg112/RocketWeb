@@ -1,0 +1,93 @@
+{% extends "RocketWebMain/index.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="fs-20">Карточка сотрудника RTS</h3>
+                            <p class="mb-2">Заполните информацию о себе в Карточке Сотрудника, чтобы получать
+                                актуальную информацию, выплаты и доступ к платформе</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="mb-2"></div>
+                            <div class="mb-2">
+
+                                <a href="/profile" class="btn btn-danger btn-sm apply-job"><i
+                                        class="far fa-check-circle me-2"></i>Заполнить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="fs-20">Единая База Знаний RTS</h3>
+                            <p class="mb-2">Получите всю необходимую информацию в нашей Базе Знаний или спросите
+                                знающих</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="mb-2"></div>
+                            <div class="mb-2">
+
+                                <a href="/collections" class="btn btn-danger btn-sm apply-job"><i
+                                        class="far fa-check-circle me-2"></i>Перейти к БЗ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="fs-20">Teacher's Assistant</h3>
+                            <p class="mb-2">Функционал Teacher's Assistant полностью перенесен на платформу. Загружайте
+                                проекты и отправляйте запросы в одной вкладке браузера.</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="mb-2"></div>
+                            <div class="mb-2">
+
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Перейти</button>
+                                <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/teacher-assistant/certificate">Сертификаты</a>
+                                        <a class="dropdown-item" href="/teacher-assistant/certificate">Защита проектов</a>
+                                        <a class="dropdown-item" href="/teacher-assistant/certificate">Подарки</a>
+                                        <a class="dropdown-item" href="/teacher-assistant/certificate">Тех. поддержка</a>
+                                        <a class="dropdown-item" href="/teacher-assistant/certificate">Портфолио</a>
+
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="fs-20">Календарь Дней Рождений</h3>
+                            <p class="mb-2">Узнай, у кого из коллег в ближайшие дни день рождения!</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="mb-2"></div>
+                            <div class="mb-2">
+
+                                <a href="/teacher-assistant " class="btn btn-danger btn-sm apply-job"><i
+                                        class="far fa-check-circle me-2"></i>Перейти</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
